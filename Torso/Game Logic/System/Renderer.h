@@ -15,6 +15,7 @@ public:
 	void ChangeTexture(char* newTexture);
 	void ChangeShader(char* newShader);
 	void Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, glm::vec3 color);
+	void Render(glm::mat4 model, glm::vec3 color);
 	void InitRenderData();
 	Texture2D texture;
 	Shader shader;

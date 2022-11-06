@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Window.h"
+#include <glm/gtx/string_cast.hpp>
 #include <iostream>
 
 Renderer::Renderer(const char* textureName,const char* shaderName) {
@@ -80,6 +81,25 @@ void Renderer::InitRenderData() {
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 }
+void Renderer::Render(glm::mat4 pmodel, glm::vec3 color) {
+	glActiveTexture(GL_TEXTURE0);
+	texture.Bind();
+
+	this->shader.Use();
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)Window::getInstance().getWindowWidth() / (float)Window::getInstance().getWindowHeight(), 0.1f, 100.0f);
+	shader.SetMatrix4("projection", projection);
+
+	glm::mat4 view = glm::mat4(1.0f);
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	shader.SetMatrix4("view", view);
+
+	glm::mat4 model = pmodel;
+	std::cout << glm::to_string(model) << std::endl;
+	shader.SetMatrix4("model", model);
+
+	glBindVertexArray(VAO);
+	glDrawArrays(GL_TRIANGLES, 0, 36);
+}
 void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, glm::vec3 color) {
 	glActiveTexture(GL_TEXTURE0);
 	texture.Bind();
@@ -90,9 +110,9 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 
 	glm::mat4 view = glm::mat4(1.0f);
 	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	shader.SetMatrix4("view", view);
 
 	glm::mat4 model = glm::mat4(1.0f);
-	shader.SetMatrix4("view", view);
 
 	glm::vec3 xNorm(1.0, 0.0f, 0.0);
 	glm::vec3 yNorm(0.0, 1.0f, 0.0);
@@ -108,6 +128,7 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 	//model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // move origin of rotation to center of quad
 	//model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // move origin back
 	model = glm::scale(model, size); // last scale
+	std::cout << glm::to_string(model) << std::endl;
 	shader.SetMatrix4("model", model);
 
 	glBindVertexArray(VAO);

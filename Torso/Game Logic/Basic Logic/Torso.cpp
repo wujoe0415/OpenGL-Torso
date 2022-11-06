@@ -3,6 +3,7 @@
 
 Torso::Torso() {
 	InputCreater();
+	cube = new GameObject();
 	gameObjects = new GameObject[11];
 	for (int i = 0; i < 11; i++) {
 		gameObjects[i].transform->SetPosition(partpositions[i]);
@@ -79,5 +80,6 @@ void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 void Torso::Draw(Renderer* renderer) {
 	for (int i = 0; i < 11;i++)
 		gameObjects[i].Render(renderer);
+	//cube->Render(renderer);
 	
 }

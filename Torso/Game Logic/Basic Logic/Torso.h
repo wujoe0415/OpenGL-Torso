@@ -9,10 +9,11 @@ using namespace std;
 class Torso : public GameObject{
 public:
 	Torso();
+	GameObject* cube;
 	GameObject* gameObjects;
 	map<string, int> mapping = { {"Torso", 0},{"Head", 1},{"Upper left arm", 2},{"Lower left arm", 3},
 								 {"Upper right arm", 4},{"Lower right arm", 5},{"Upper left leg", 6},
-								 {"Lower left leg", 7},{"Upper right arm", 8},{"Lower right leg", 9}, 
+								 {"Lower left leg", 7},{"Upper right leg", 8},{"Lower right leg", 9}, 
 								 {"Body", 10} };
 	glm::vec3 partpositions[11] = {
 		glm::vec3(0,0,0),
@@ -28,7 +29,7 @@ public:
 		glm::vec3(0,0.3,0),
 	};
 	glm::vec3 partscales[11] = {
-		glm::vec3(0,0,0.3),
+		glm::vec3(1,1,1),
 		glm::vec3(0.25,0.25,0.25),
 		glm::vec3(0.4,0.15,0.15),
 		glm::vec3(0.3,0.1,0.1),
