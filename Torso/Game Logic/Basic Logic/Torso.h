@@ -10,6 +10,7 @@ class Torso : public GameObject{
 public:
 	Torso();
 	GameObject* cube;
+	GameObject* cube2;
 	GameObject* gameObjects;
 	map<string, int> mapping = { {"Torso", 0},{"Head", 1},{"Upper left arm", 2},{"Lower left arm", 3},
 								 {"Upper right arm", 4},{"Lower right arm", 5},{"Upper left leg", 6},

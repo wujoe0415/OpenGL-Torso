@@ -4,11 +4,8 @@
 Torso::Torso() {
 	InputCreater();
 	cube = new GameObject();
+	cube2 = new GameObject();
 	gameObjects = new GameObject[11];
-	for (int i = 0; i < 11; i++) {
-		gameObjects[i].transform->SetPosition(partpositions[i]);
-		gameObjects[i].transform->SetScale(partscales[i]);
-	}
 	gameObjects[1].transform->SetParent(gameObjects[0].transform);
 	gameObjects[3].transform->SetParent(gameObjects[2].transform);
 	gameObjects[5].transform->SetParent(gameObjects[4].transform);
@@ -19,6 +16,18 @@ Torso::Torso() {
 	gameObjects[4].transform->SetParent(gameObjects[10].transform);
 	gameObjects[6].transform->SetParent(gameObjects[10].transform);
 	gameObjects[8].transform->SetParent(gameObjects[10].transform);
+
+	for (int i = 0; i < 11; i++) {
+		gameObjects[i].transform->SetPosition(partpositions[i]);
+		gameObjects[i].transform->SetScale(partscales[i]);
+	}
+	cube->transform->Translate(0, 0.5, 0);
+	cube->transform->SetScale(glm::vec3(0.25,0.25,0.25));
+	cube2->transform->Translate(0, -0.5, 0);
+	cube2->transform->SetScale(glm::vec3(0.25,0.25,0.25));
+	cube2->transform->SetParent(cube->transform);
+	cube2->transform->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
+	
 }
 void Torso::InputCreater() {
 	inputList.push_back(GLFW_KEY_0);
@@ -78,8 +87,11 @@ void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 	part->transform->Rotate(angle * direction.x, angle * direction.y, angle * direction.z);
 }
 void Torso::Draw(Renderer* renderer) {
-	for (int i = 0; i < 11;i++)
+	for (int i = 1; i < 11;i++)
 		gameObjects[i].Render(renderer);
-	//cube->Render(renderer);
 	
+	//cube->transform->Translate(0.01f, 0, 0);
+	/*cube->transform->Rotate(5.0f, 0, 0);
+	cube->Render(renderer);
+	cube2->Render(renderer);*/
 }

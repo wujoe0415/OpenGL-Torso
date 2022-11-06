@@ -94,7 +94,7 @@ void Renderer::Render(glm::mat4 pmodel, glm::vec3 color) {
 	shader.SetMatrix4("view", view);
 
 	glm::mat4 model = pmodel;
-	std::cout << glm::to_string(model) << std::endl;
+	//std::cout << glm::to_string(model) << std::endl;
 	shader.SetMatrix4("model", model);
 
 	glBindVertexArray(VAO);
@@ -128,7 +128,7 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 	//model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // move origin of rotation to center of quad
 	//model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // move origin back
 	model = glm::scale(model, size); // last scale
-	std::cout << glm::to_string(model) << std::endl;
+	//std::cout << glm::to_string(model) << std::endl;
 	shader.SetMatrix4("model", model);
 
 	glBindVertexArray(VAO);
