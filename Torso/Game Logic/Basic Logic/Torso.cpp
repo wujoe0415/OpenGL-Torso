@@ -1,13 +1,18 @@
 #include "Torso.h"
 #include <iostream>
+#include <glm/gtx/string_cast.hpp>
 
 Torso::Torso() {
 	InputCreater();
 	cube = new GameObject();
 	cube2 = new GameObject();
 	gameObjects = new GameObject[11];
+	for (int i = 0; i < 11; i++) {
+		gameObjects[i].transform->SetPosition(partpositions[i]);
+		gameObjects[i].transform->SetScale(partscales[i]);
+	}
 	gameObjects[1].transform->SetParent(gameObjects[0].transform);
-	gameObjects[3].transform->SetParent(gameObjects[2].transform);
+	gameObjects[3].transform->SetParent(gameObjects[2].transform);/*
 	gameObjects[5].transform->SetParent(gameObjects[4].transform);
 	gameObjects[7].transform->SetParent(gameObjects[6].transform);
 	gameObjects[9].transform->SetParent(gameObjects[8].transform);
@@ -15,11 +20,14 @@ Torso::Torso() {
 	gameObjects[2].transform->SetParent(gameObjects[10].transform);
 	gameObjects[4].transform->SetParent(gameObjects[10].transform);
 	gameObjects[6].transform->SetParent(gameObjects[10].transform);
-	gameObjects[8].transform->SetParent(gameObjects[10].transform);
-
-	for (int i = 0; i < 11; i++) {
-		gameObjects[i].transform->SetPosition(partpositions[i]);
-		gameObjects[i].transform->SetScale(partscales[i]);
+	gameObjects[8].transform->SetParent(gameObjects[10].transform);*/
+	
+	for (int i = 1; i < 11; i++) {
+		std::cout << i<<" " <<glm::to_string(gameObjects[i].transform->GetGlobalPosition()) << std::endl;
+	}
+	std::cout << std::endl;
+	for (int i = 1; i < 11; i++) {
+		std::cout << i << " " << glm::to_string(gameObjects[i].transform->GetGlobalScale()) << std::endl;
 	}
 	cube->transform->Translate(0, 0.5, 0);
 	cube->transform->SetScale(glm::vec3(0.25,0.25,0.25));
