@@ -165,16 +165,25 @@ void Transform::Translate(float x, float y, float z) {
 	this->localPosition += glm::vec3(x, y, z);
 	UpdateSelfAndChildren();
 }
-glm::vec3 Transform::RotatePivot(float roll, float pitch, float yaw, glm::vec3 pivot) {
-	pitch = glm::radians(pitch);
-	yaw = glm::radians(yaw);
-	roll = glm::radians(roll);
+glm::vec3 Transform::RotatePivot(float x, float y, float z, glm::vec3 pivot) {
+	const glm::mat4 transformX = glm::rotate(glm::mat4(1.0f),
+		glm::radians(x),
+		glm::vec3(1.0f, 0.0f, 0.0f));
+	const glm::mat4 transformY = glm::rotate(glm::mat4(1.0f),
+		glm::radians(y),
+		glm::vec3(0.0f, 1.0f, 0.0f));
+	const glm::mat4 transformZ = glm::rotate(glm::mat4(1.0f),
+		glm::radians(z),
+		glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 parent_pivot_rotate = transformY * transformX * transformZ;
 	float radius = glm::distance(localPosition, glm::vec3(0.0f));
-	glm::vec3 direction = glm::vec3(0.0f);
-	direction.x = -cos(yaw)*sin(pitch)*sin(roll) - sin(yaw)*cos(roll);
-	direction.y = -sin(yaw)*sin(pitch)*sin(roll) + cos(yaw)*cos(roll);
-	direction.z = cos(pitch)*sin(roll);
-	glm::vec3 lastposition = pivot + radius * direction;
+	glm::vec3 direction = glm::vec3(parent_pivot_rotate * glm::vec4(localPosition, 1.0f));
+	
+	/*direction.z = -cos(yaw)*sin(pitch)*sin(roll) - sin(yaw)*cos(roll);
+	direction.x = -sin(yaw)*sin(pitch)*sin(roll) + cos(yaw)*cos(roll);
+	direction.y = cos(pitch)*sin(roll);*/
+	
+	glm::vec3 lastposition = pivot + /*radius **/ direction;
 	std::cout << "direction : " << glm::to_string(direction) << std::endl;
 	//std::cout << glm::to_string(lastposition)<<std::endl;
 	return lastposition;
