@@ -9,94 +9,6 @@ Transform::Transform(glm::vec3 postion, glm::vec3 rotation, glm::vec3 scale) {
 	localScale = scale;
 	Parent = NULL;
 }
-void Transform::ComputeModelMatrix() {
-	if (Parent == NULL)
-		modelMatrix = GetLocalModelMatrix();
-	else
-		modelMatrix = Parent->GetLocalModelMatrix() * GetLocalModelMatrix();
-}
-glm::mat4 Transform::GetModelMatrix() {
-	//ComputeModelMatrix();
-	//return modelMatrix;
-	glm::vec3 pivot = glm::vec3(0.0f);
-	if (Parent != NULL)
-		pivot = Parent->GetGlobalPosition();
-	glm::mat4 trans_to_pivot = glm::translate(glm::mat4(1.0f), -pivot);
-	glm::mat4 trans_from_pivot = glm::translate(glm::mat4(1.0f), pivot);
-	glm::mat4 parent_pivot_rotate = glm::mat4(1.0f);
-	if (Parent != NULL) {
-		const glm::mat4 transformX = glm::rotate(glm::mat4(1.0f),
-			glm::radians(Parent->localRotation.x),
-			glm::vec3(1.0f, 0.0f, 0.0f));
-		const glm::mat4 transformY = glm::rotate(glm::mat4(1.0f),
-			glm::radians(Parent->localRotation.y),
-			glm::vec3(0.0f, 1.0f, 0.0f));
-		const glm::mat4 transformZ = glm::rotate(glm::mat4(1.0f),
-			glm::radians(Parent->localRotation.z),
-			glm::vec3(0.0f, 0.0f, 1.0f));
-		parent_pivot_rotate = transformY * transformX * transformZ;
-	}
-
-	const glm::mat4 transformX = glm::rotate(glm::mat4(1.0f),
-		glm::radians(localRotation.x),
-		glm::vec3(1.0f, 0.0f, 0.0f));
-	const glm::mat4 transformY = glm::rotate(glm::mat4(1.0f),
-		glm::radians(localRotation.y),
-		glm::vec3(0.0f, 1.0f, 0.0f));
-	const glm::mat4 transformZ = glm::rotate(glm::mat4(1.0f),
-		glm::radians(localRotation.z),
-		glm::vec3(0.0f, 0.0f, 1.0f));
-	glm::mat4 localRotation = transformY * transformX * transformZ;
-	
-	// Y * X * Z
-	const glm::mat4 roationMatrix = trans_from_pivot * parent_pivot_rotate * trans_to_pivot *  localRotation;
-
-	glm::vec3 returnPosition = localPosition;
-	if (Parent != NULL)
-		returnPosition = glm::vec3(0.0f);
-	glm::mat4 position = glm::translate(glm::mat4(1.0f), returnPosition);
-	glm::mat4 scale = glm::scale(glm::mat4(1.0f), GetGlobalScale());
-	
-	return position * roationMatrix *	scale;
-}
-void Transform::UpdateSelfAndChildren() {
-	//modelMatrix = GetModelMatrix();
-
-	for (Transform* child : Children)
-		child->UpdateSelfAndChildren();
-}
-glm::mat4 Transform::GetLocalModelMatrix()
-{
-	glm::vec3 pivot = glm::vec3(0.0f);
-	if (Parent != NULL)
-		pivot = Parent->GetGlobalPosition();
-	glm::mat4 trans_to_pivot = glm::translate(glm::mat4(1.0f), -pivot);
-	glm::mat4 trans_from_pivot = glm::translate(glm::mat4(1.0f), pivot);
-	const glm::mat4 transformX = glm::rotate(glm::mat4(1.0f),
-		glm::radians(localRotation.x),
-		glm::vec3(1.0f, 0.0f, 0.0f));
-	const glm::mat4 transformY = glm::rotate(glm::mat4(1.0f),
-		glm::radians(localRotation.y),
-		glm::vec3(0.0f, 1.0f, 0.0f));
-	const glm::mat4 transformZ = glm::rotate(glm::mat4(1.0f),
-		glm::radians(localRotation.z),
-		glm::vec3(0.0f, 0.0f, 1.0f));
-
-	// Y * X * Z
-	const glm::mat4 roationMatrix = /*trans_from_pivot **/ transformY * transformX * transformZ /** trans_to_pivot*/;
-	/*std::cout << "X Rotation : " << glm::to_string(transformX) << std::endl << std::endl;
-	std::cout << "Y Rotation : " << glm::to_string(transformY) << std::endl << std::endl;
-	std::cout << "Z Rotation : " << glm::to_string(transformZ) << std::endl << std::endl;*/
-	//std::cout << "Rotation Matrix : " << glm::to_string(roationMatrix) << std::endl << std::endl;
-	// translation * rotation * scale (also know as TRS matrix)
-	//std::cout << "Translation : " << glm::to_string(glm::translate(glm::mat4(1.0f), localPosition)) << std::endl << std::endl;
-	//std::cout << "Scale : " << glm::to_string(glm::scale(glm::mat4(1.0f), localScale)) << std::endl << std::endl;
-	//std::cout << "Rotation X : " << localRotation.x << std::endl;
-	/*std::cout << std::endl << glm::to_string(glm::translate(glm::mat4(1.0f), localPosition) *
-		roationMatrix *	glm::scale(glm::mat4(1.0f), localScale))<<std::endl;*/
-	return glm::translate(glm::mat4(1.0f), localPosition) *
-		roationMatrix *	glm::scale(glm::mat4(1.0f), localScale);
-}
 void Transform::SetParent(Transform* parent) {
 	if (parent != NULL)
 	{
@@ -140,14 +52,12 @@ void Transform::SetPosition(glm::vec3 position) {
 		this->localPosition = position;
 	else
 		this->localPosition = position - Parent->GetGlobalPosition();
-	UpdateSelfAndChildren();
 }
 void Transform::SetRotation(glm::vec3 rotation) {
 	if (Parent == NULL)
 		this->localRotation = rotation;
 	else
 		this->localRotation = rotation - Parent->GetGlobalRotation();
-	UpdateSelfAndChildren();
 }
 void Transform::SetScale(glm::vec3 scale) {
 	if (Parent == NULL)
@@ -159,11 +69,9 @@ void Transform::SetScale(glm::vec3 scale) {
 		localScale.y = parentScale.y == 0 ? 0 : (float)scale.y / parentScale.y;
 		localScale.z = parentScale.z == 0 ? 0 : (float)scale.z / parentScale.z;
 	}
-	UpdateSelfAndChildren();
 }
 void Transform::Translate(float x, float y, float z) {
 	this->localPosition += glm::vec3(x, y, z);
-	UpdateSelfAndChildren();
 }
 glm::vec3 Transform::RotatePivot(float x, float y, float z, glm::vec3 pivot) {
 	const glm::mat4 transformX = glm::rotate(glm::mat4(1.0f),
@@ -190,7 +98,6 @@ glm::vec3 Transform::RotatePivot(float x, float y, float z, glm::vec3 pivot) {
 }
 void Transform::Rotate(float x, float y, float z) {
 	localRotation += glm::vec3(x, y, z);
-	UpdateSelfAndChildren();
 }
 glm::vec3 Transform::GetGlobalPosition() {
 	if (Parent == NULL)

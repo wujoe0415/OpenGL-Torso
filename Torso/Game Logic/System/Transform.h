@@ -9,10 +9,6 @@ using namespace std;
 class Transform {
 public:
 	Transform(glm::vec3 postion = glm::vec3(0, 0, 0), glm::vec3 rotation = glm::vec3(0, 0, 0), glm::vec3 scale = glm::vec3(1, 1, 1));
-	glm::mat4 GetModelMatrix();
-	glm::mat4 GetLocalModelMatrix();
-	void ComputeModelMatrix();
-	void UpdateSelfAndChildren();
 	Transform* Parent;
 	vector<Transform*> Children;
 	void SetParent(Transform* parent);
