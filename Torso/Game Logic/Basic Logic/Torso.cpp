@@ -114,6 +114,11 @@ void Torso::ControlPart(string partName, glm::vec3 axis) {
 void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 	part->transform->Rotate(angle * direction.x, angle * direction.y, angle * direction.z);
 }
+void Torso::DrawJoint(SphereRenderer* renderer) {
+	for (int i = 1; i < 10; i++) {
+		joints[i].Render(renderer);
+	}
+}
 void Torso::Draw(Renderer* renderer) {
 	for (int i = 1; i < 11;i++)
 		gameObjects[i].Render(renderer);

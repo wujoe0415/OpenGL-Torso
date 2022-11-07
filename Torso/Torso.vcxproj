@@ -125,18 +125,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Game Logic\Basic Logic\Bomb.cpp" />
-    <ClCompile Include="Game Logic\Basic Logic\Coin.cpp" />
     <ClCompile Include="Game Logic\Basic Logic\Entity.cpp" />
     <ClCompile Include="Game Logic\Basic Logic\Game.cpp" />
-    <ClCompile Include="Game Logic\Basic Logic\Number.cpp" />
-    <ClCompile Include="Game Logic\Basic Logic\Player.cpp" />
     <ClCompile Include="Game Logic\Basic Logic\Torso.cpp" />
-    <ClCompile Include="Game Logic\Basic Logic\UI.cpp" />
-    <ClCompile Include="Game Logic\Basic Logic\WholeUI.cpp" />
     <ClCompile Include="Game Logic\System\GameObject.cpp" />
     <ClCompile Include="Game Logic\System\glad.c" />
     <ClCompile Include="Game Logic\System\KeyInput.cpp" />
+    <ClCompile Include="Game Logic\System\SphereRenderer.cpp" />
     <ClCompile Include="Game Logic\System\Renderer.cpp" />
     <ClCompile Include="Game Logic\System\Resource_Manager.cpp" />
     <ClCompile Include="Game Logic\System\Shader.cpp" />
@@ -149,16 +144,11 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game Logic\Basic Logic\Bomb.h" />
-    <ClInclude Include="Game Logic\Basic Logic\Coin.h" />
     <ClInclude Include="Game Logic\Basic Logic\Entity.h" />
     <ClInclude Include="Game Logic\Basic Logic\Game.h" />
-    <ClInclude Include="Game Logic\Basic Logic\Number.h" />
-    <ClInclude Include="Game Logic\Basic Logic\Player.h" />
     <ClInclude Include="Game Logic\Basic Logic\Torso.h" />
+    <ClInclude Include="Game Logic\System\SphereRenderer.h" />
     <ClInclude Include="Game Logic\System\Renderer.h" />
-    <ClInclude Include="Game Logic\Basic Logic\UI.h" />
-    <ClInclude Include="Game Logic\Basic Logic\WholeUI.h" />
     <ClInclude Include="Game Logic\System\GameObject.h" />
     <ClInclude Include="Game Logic\System\IDrawable.h" />
     <ClInclude Include="Game Logic\System\KeyInput.h" />
@@ -172,6 +162,8 @@
     <ClInclude Include="Game Logic\System\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="sphere.frag" />
+    <None Include="sphere.vert" />
     <None Include="cube.frag" />
     <None Include="cube.vert" />
     <None Include="quad.frag" />

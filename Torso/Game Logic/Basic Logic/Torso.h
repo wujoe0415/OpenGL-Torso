@@ -4,6 +4,7 @@
 #include <map>
 #include "System/KeyInput.h"
 #include "System/Renderer.h"
+#include "System/SphereRenderer.h";
 using namespace std;
 
 class Torso : public GameObject{
@@ -59,6 +60,7 @@ public:
 	void RotateJoint(GameObject* part, float angle,glm::vec3 direction);
 	void ControlPart(string partName, glm::vec3 axis);
 	void Draw(Renderer*);
+	void DrawJoint(SphereRenderer*);
 	void InputHandler();
 private:
 	KeyInput* Input;

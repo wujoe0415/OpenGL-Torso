@@ -8,6 +8,7 @@
 #include "System/Resource_Manager.h"
 #include <glm/glm.hpp>
 #include "System/Renderer.h"
+#include "System/SphereRenderer.h"
 using namespace std;
 
 class Game{
@@ -16,6 +17,7 @@ private:
 	float totalTime;
 	KeyInput* keyinputs;
 	Renderer* renderer;
+	SphereRenderer* sphererenderer;
 	Torso* torso;
 
 public:

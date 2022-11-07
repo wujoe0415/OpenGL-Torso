@@ -18,28 +18,10 @@
     <ClCompile Include="main.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
-    <ClCompile Include="Game Logic\Basic Logic\Bomb.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Logic\Basic Logic\Coin.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
     <ClCompile Include="Game Logic\Basic Logic\Entity.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Game Logic\Basic Logic\Game.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Logic\Basic Logic\Number.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Logic\Basic Logic\Player.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Logic\Basic Logic\UI.cpp">
-      <Filter>來源檔案</Filter>
-    </ClCompile>
-    <ClCompile Include="Game Logic\Basic Logic\WholeUI.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
     <ClCompile Include="Game Logic\System\glad.c">
@@ -81,30 +63,15 @@
     <ClCompile Include="Game Logic\Basic Logic\Torso.cpp">
       <Filter>來源檔案</Filter>
     </ClCompile>
+    <ClCompile Include="Game Logic\System\SphereRenderer.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game Logic\Basic Logic\Bomb.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="Game Logic\Basic Logic\Coin.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
     <ClInclude Include="Game Logic\Basic Logic\Entity.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Game Logic\Basic Logic\Game.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="Game Logic\Basic Logic\Number.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="Game Logic\Basic Logic\Player.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="Game Logic\Basic Logic\UI.h">
-      <Filter>標頭檔</Filter>
-    </ClInclude>
-    <ClInclude Include="Game Logic\Basic Logic\WholeUI.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="Game Logic\System\IDrawable.h">
@@ -146,11 +113,16 @@
     <ClInclude Include="Game Logic\Basic Logic\Torso.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
+    <ClInclude Include="Game Logic\System\SphereRenderer.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="quad.frag" />
     <None Include="quad.vert" />
     <None Include="cube.vert" />
     <None Include="cube.frag" />
+    <None Include="sphere.frag" />
+    <None Include="sphere.vert" />
   </ItemGroup>
 </Project>

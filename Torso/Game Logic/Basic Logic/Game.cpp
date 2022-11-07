@@ -14,7 +14,7 @@ Game::Game() {
 	ResourceManager::LoadShader("cube.vert", "cube.frag", nullptr, "standard");
 	ResourceManager::LoadTexture("Resources/lightblue.png", false, "lightblue");
 	ResourceManager::GetShader("standard").Use().SetInteger("standard", 0);
-
+	sphererenderer = new SphereRenderer("lightblue", "standard");
 	renderer = new Renderer("lightblue", "standard");
 	InitGame();
 } 
@@ -25,6 +25,7 @@ void Game::InitGame() {
 }
 void Game::Draw() {
 	torso->Draw(renderer);
+	//torso->DrawJoint(sphererenderer);
 }
 void Game::GameLoop() {
 	float deltaTime = glfwGetTime() - totalTime;
