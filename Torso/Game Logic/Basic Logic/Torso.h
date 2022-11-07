@@ -47,13 +47,13 @@ public:
 		glm::vec3(1,1,1),
 		glm::vec3(0.25,0.25,0.25),
 		glm::vec3(0.4,0.15,0.15),
-		glm::vec3(0.3,0.1,0.1),
+		glm::vec3(0.3,0.1,0.15),
 		glm::vec3(0.4,0.15,0.15),
-		glm::vec3(0.3,0.1,0.1),
+		glm::vec3(0.3,0.1,0.15),
 		glm::vec3(0.2,0.45,0.15),
-		glm::vec3(0.1,0.3,0.1),
+		glm::vec3(0.1,0.3,0.15),
 		glm::vec3(0.2,0.45,0.15),
-		glm::vec3(0.1,0.3,0.1),
+		glm::vec3(0.1,0.3,0.15),
 		glm::vec3(0.6,0.8,0.3)
 	};
 	void RotateJoint(GameObject* part, float angle,glm::vec3 direction);

@@ -175,7 +175,7 @@ glm::vec3 Transform::RotatePivot(float x, float y, float z, glm::vec3 pivot) {
 	const glm::mat4 transformZ = glm::rotate(glm::mat4(1.0f),
 		glm::radians(z),
 		glm::vec3(0.0f, 0.0f, 1.0f));
-	glm::mat4 parent_pivot_rotate = transformY * transformX * transformZ;
+	glm::mat4 parent_pivot_rotate = transformX *transformY *  transformZ;
 	float radius = glm::distance(localPosition, glm::vec3(0.0f));
 	glm::vec3 direction = glm::vec3(parent_pivot_rotate * glm::vec4(localPosition, 1.0f));
 	
@@ -184,7 +184,7 @@ glm::vec3 Transform::RotatePivot(float x, float y, float z, glm::vec3 pivot) {
 	direction.y = cos(pitch)*sin(roll);*/
 	
 	glm::vec3 lastposition = pivot + /*radius **/ direction;
-	std::cout << "direction : " << glm::to_string(direction) << std::endl;
+	//std::cout << "direction : " << glm::to_string(direction) << std::endl;
 	//std::cout << glm::to_string(lastposition)<<std::endl;
 	return lastposition;
 }
@@ -197,7 +197,7 @@ glm::vec3 Transform::GetGlobalPosition() {
 		return localPosition;
 	else {
 		//std::cout << "Absolute position " << glm::to_string(Parent->GetGlobalPosition() + localPosition) << std::endl;
-		return RotatePivot(Parent->localRotation.x,Parent->localRotation.y,Parent->localRotation.z, Parent->GetGlobalPosition());
+		return RotatePivot(Parent->GetGlobalRotation().x,Parent->GetGlobalRotation().y,Parent->GetGlobalRotation().z, Parent->GetGlobalPosition());
 	}
 }
 glm::vec3 Transform::GetGlobalRotation() {

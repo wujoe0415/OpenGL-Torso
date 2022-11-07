@@ -50,9 +50,9 @@ Torso::Torso() {
 		std::cout << i << " " << glm::to_string(gameObjects[i].transform->GetGlobalScale()) << std::endl;
 	}*/
 
-	cube->transform->Translate(0, 0.3, 0);
+	cube->transform->Translate(0.3, 0, 0);
 	cube->transform->SetScale(glm::vec3(0.25,0.25,0.25));
-	cube2->transform->Translate(0, -0.3, 0);
+	cube2->transform->Translate(-0.3, 0, 0);
 	cube2->transform->SetScale(glm::vec3(0.25,0.25,0.25));
 	cube2->transform->SetParent(cube->transform);
 	
@@ -117,6 +117,7 @@ void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 void Torso::Draw(Renderer* renderer) {
 	for (int i = 1; i < 11;i++)
 		gameObjects[i].Render(renderer);
+	//std::cout << glm::to_string(joints[3].transform->GetGlobalPosition())<<std::endl;
 	//gameObjects[2].Render(renderer);
 	//gameObjects[3].Render(renderer);
 	//cube->transform->Translate(0.01f, 0, 0);

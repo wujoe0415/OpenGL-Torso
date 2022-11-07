@@ -261,6 +261,7 @@ if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
 }
 glEnable(GL_BLEND);
 glEnable(GL_DEPTH_TEST);
+glEnable(GL_LIGHTING);
 glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 Game* torsoSimulator = new Game();
 

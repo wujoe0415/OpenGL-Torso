@@ -121,14 +121,18 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 	
 	model = glm::translate(model, position);
 
-	glm::vec3 xNorm(1.0, 0.0f, 0.0);
-	glm::vec3 yNorm(0.0, 1.0f, 0.0);
-	glm::vec3 zNorm(0.0, 0.0f, 1.0);
-	model = glm::rotate(model, glm::radians(rotation.x), xNorm); // Rotate on X axis
-	yNorm = glm::rotate(yNorm, glm::radians(-rotation.x), xNorm);
-	model = glm::rotate(model, glm::radians(rotation.y), yNorm); // Rotate on Y axis
-	zNorm = glm::rotate(zNorm, glm::radians(-rotation.x), xNorm);
-	model = glm::rotate(model, glm::radians(rotation.z), zNorm); // Rotate on Z axis
+	const glm::mat4 transformX = glm::rotate(glm::mat4(1.0f),
+		glm::radians(rotation.x),
+		glm::vec3(1.0f, 0.0f, 0.0f));
+	const glm::mat4 transformY = glm::rotate(glm::mat4(1.0f),
+		glm::radians(rotation.y),
+		glm::vec3(0.0f, 1.0f, 0.0f));
+	const glm::mat4 transformZ = glm::rotate(glm::mat4(1.0f),
+		glm::radians(rotation.z),
+		glm::vec3(0.0f, 0.0f, 1.0f));
+	glm::mat4 rotateMatrix = transformX * transformY *  transformZ;
+
+	model *= rotateMatrix;
 
 	model = glm::scale(model, size); // last scale
 
