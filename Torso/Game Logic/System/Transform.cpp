@@ -36,6 +36,8 @@ glm::mat4 Transform::GetLocalModelMatrix()
 	//std::cout << "Translation : " << glm::to_string(glm::translate(glm::mat4(1.0f), localPosition)) << std::endl << std::endl;
 	//std::cout << "Scale : " << glm::to_string(glm::scale(glm::mat4(1.0f), localScale)) << std::endl << std::endl;
 	//std::cout << "Rotation X : " << localRotation.x << std::endl;
+	std::cout << glm::to_string(glm::translate(glm::mat4(1.0f), localPosition) *
+		roationMatrix *	glm::scale(glm::mat4(1.0f), localScale))<<std::endl;
 	return glm::translate(glm::mat4(1.0f), localPosition) *
 		roationMatrix *	glm::scale(glm::mat4(1.0f), localScale);
 }
@@ -58,12 +60,13 @@ void Transform::SetParent(Transform* parent) {
 		}
 	}
 	parent->Children.push_back(this);
+	//std::cout << "Original : \npoistion : " + glm::to_string(GetGlobalPosition()) << std::endl << "rotation : " + glm::to_string(GetGlobalRotation()) << std::endl << "scale : " + glm::to_string(GetGlobalScale()) << std::endl << std::endl;
 	this->Parent = parent;
 	UpdateLocalData();
 }
 void Transform::UpdateLocalData() {
 	localPosition -= Parent->GetGlobalPosition();
-	std::cout << "Update to " << glm::to_string(localPosition) << std::endl;
+	//std::cout << "Update to " << glm::to_string(localPosition) << std::endl;
 	localRotation -= Parent->GetGlobalRotation();
 	glm::vec3 parentScale = Parent->GetGlobalScale();
 	//std::cout << "localscale.x : " << localScale.x << ", parentscale.x"<< parentScale.x <<" "<< (float)localScale.x / parentScale.x<< std::endl;
@@ -72,6 +75,8 @@ void Transform::UpdateLocalData() {
 	localScale.x = parentScale.x == 0.0f ? 0.0f : (float)localScale.x / parentScale.x;
 	localScale.y = parentScale.y == 0.0f ? 0.0f : (float)localScale.y / parentScale.y;
 	localScale.z = parentScale.z == 0.0f ? 0.0f : (float)localScale.z / parentScale.z;
+	//std::cout << "\nAfter : \npoistion : " + glm::to_string(GetGlobalPosition()) << std::endl << "rotation : " + glm::to_string(GetGlobalRotation()) << std::endl << "scale : " + glm::to_string(GetGlobalScale()) << std::endl << std::endl;
+
 	//std::cout << "localscale : " << glm::to_string(localScale)<<std::endl;
 }
 void Transform::SetPosition(glm::vec3 position) {
@@ -98,10 +103,10 @@ void Transform::SetScale(glm::vec3 scale) {
 	}
 }
 void Transform::Translate(float x, float y, float z) {
-	SetPosition(this->localPosition + glm::vec3(x, y, z));
+	this->localPosition += glm::vec3(x, y, z);
 }
 void Transform::Rotate(float x, float y, float z) {
-	SetRotation(localRotation + glm::vec3(x, y, z));
+	localRotation += glm::vec3(x, y, z);
 }
 glm::vec3 Transform::GetGlobalPosition() {
 	if (Parent == NULL)
