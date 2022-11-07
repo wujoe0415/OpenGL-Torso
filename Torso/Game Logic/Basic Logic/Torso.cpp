@@ -7,21 +7,40 @@ Torso::Torso() {
 	cube = new GameObject();
 	cube2 = new GameObject();
 	gameObjects = new GameObject[11];
+	joints = new GameObject[11];
 	for (int i = 0; i < 11; i++) {
 		gameObjects[i].transform->SetPosition(partpositions[i]);
 		gameObjects[i].transform->SetScale(partscales[i]);
 	}
-	gameObjects[1].transform->SetParent(gameObjects[0].transform);
+	for (int i = 0; i < 11; i++) {
+		joints[i].transform->SetPosition(jointpositions[i]);
+	}
+	// joint inheritence
+	joints[3].transform->SetParent(joints[2].transform);
+	joints[5].transform->SetParent(joints[4].transform);
+	joints[7].transform->SetParent(joints[6].transform);
+	joints[9].transform->SetParent(joints[8].transform);
+	joints[2].transform->SetParent(joints[10].transform);
+	joints[4].transform->SetParent(joints[10].transform);
+	joints[6].transform->SetParent(joints[10].transform);
+	joints[8].transform->SetParent(joints[10].transform);
+	joints[1].transform->SetParent(joints[0].transform);
+	joints[10].transform->SetParent(joints[0].transform);
+	
+	for (int i = 0; i < 11; i++)
+		gameObjects[i].transform->SetParent(joints[i].transform);
+	/*gameObjects[1].transform->SetParent(gameObjects[0].transform);
+	gameObjects[10].transform->SetParent(gameObjects[0].transform);
+	
 	gameObjects[3].transform->SetParent(gameObjects[2].transform);
 	gameObjects[5].transform->SetParent(gameObjects[4].transform);
 	gameObjects[7].transform->SetParent(gameObjects[6].transform);
 	gameObjects[9].transform->SetParent(gameObjects[8].transform);
-	gameObjects[10].transform->SetParent(gameObjects[0].transform);
 	
 	gameObjects[2].transform->SetParent(gameObjects[10].transform);
 	gameObjects[4].transform->SetParent(gameObjects[10].transform);
 	gameObjects[6].transform->SetParent(gameObjects[10].transform);
-	gameObjects[8].transform->SetParent(gameObjects[10].transform);
+	gameObjects[8].transform->SetParent(gameObjects[10].transform);*/
 	
 	/*for (int i = 1; i < 11; i++) {
 		std::cout << i<<" " <<glm::to_string(gameObjects[i].transform->GetGlobalPosition()) << std::endl;
@@ -30,6 +49,7 @@ Torso::Torso() {
 	for (int i = 1; i < 11; i++) {
 		std::cout << i << " " << glm::to_string(gameObjects[i].transform->GetGlobalScale()) << std::endl;
 	}*/
+
 	cube->transform->Translate(0, 0.3, 0);
 	cube->transform->SetScale(glm::vec3(0.25,0.25,0.25));
 	cube2->transform->Translate(0, -0.3, 0);
@@ -89,7 +109,7 @@ void Torso::ControlPart(string partName, glm::vec3 axis) {
 	if (partName == "" || axis == glm::vec3(0.0))
 		return;
 
-	RotateJoint(&(gameObjects[mapping[partName]]), (float)glfwGetTime() * glm::radians(5.0), axis);
+	RotateJoint(&(joints[mapping[partName]]), /*(float)glfwGetTime() * */glm::radians(20.0), axis);
 }
 void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 	part->transform->Rotate(angle * direction.x, angle * direction.y, angle * direction.z);
@@ -97,8 +117,6 @@ void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 void Torso::Draw(Renderer* renderer) {
 	for (int i = 1; i < 11;i++)
 		gameObjects[i].Render(renderer);
-	for (int i = 2; i < 4;i++)
-		std::cout<< glm::to_string(gameObjects[i].transform->GetGlobalPosition()) << std::endl;
 	//gameObjects[2].Render(renderer);
 	//gameObjects[3].Render(renderer);
 	//cube->transform->Translate(0.01f, 0, 0);

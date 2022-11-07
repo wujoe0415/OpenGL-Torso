@@ -109,7 +109,7 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 	shader.SetMatrix4("projection", projection);
 
 	glm::mat4 view = glm::mat4(1.0f);
-	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -4.0f));
 	shader.SetMatrix4("view", view);
 
 	glm::mat4 model = glm::mat4(1.0f);
