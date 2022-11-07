@@ -94,7 +94,7 @@ void Renderer::Render(glm::mat4 pmodel, glm::vec3 color) {
 	shader.SetMatrix4("view", view);
 
 	glm::mat4 model = pmodel;
-	std::cout << glm::to_string(model) << std::endl;
+	//std::cout << glm::to_string(model) << std::endl;
 	shader.SetMatrix4("model", model);
 
 	glBindVertexArray(VAO);
@@ -113,8 +113,6 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 	shader.SetMatrix4("view", view);
 
 	glm::mat4 model = glm::mat4(1.0f);
-
-	
 
 	//model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
 	  // first translate (transformations are: scale happens first, then rotation, and then final translation happens; reversed order)

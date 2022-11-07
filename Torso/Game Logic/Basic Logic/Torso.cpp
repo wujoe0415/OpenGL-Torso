@@ -16,25 +16,24 @@ Torso::Torso() {
 	gameObjects[5].transform->SetParent(gameObjects[4].transform);
 	gameObjects[7].transform->SetParent(gameObjects[6].transform);
 	gameObjects[9].transform->SetParent(gameObjects[8].transform);
-	gameObjects[10].transform->SetParent(gameObjects[0].transform);
-	gameObjects[2].transform->SetParent(gameObjects[10].transform);
+	//gameObjects[10].transform->SetParent(gameObjects[0].transform);
+	/*gameObjects[2].transform->SetParent(gameObjects[10].transform);
 	gameObjects[4].transform->SetParent(gameObjects[10].transform);
 	gameObjects[6].transform->SetParent(gameObjects[10].transform);
-	gameObjects[8].transform->SetParent(gameObjects[10].transform);
+	gameObjects[8].transform->SetParent(gameObjects[10].transform);*/
 	
-	for (int i = 1; i < 11; i++) {
+	/*for (int i = 1; i < 11; i++) {
 		std::cout << i<<" " <<glm::to_string(gameObjects[i].transform->GetGlobalPosition()) << std::endl;
 	}
 	std::cout << std::endl;
 	for (int i = 1; i < 11; i++) {
 		std::cout << i << " " << glm::to_string(gameObjects[i].transform->GetGlobalScale()) << std::endl;
-	}
+	}*/
 	cube->transform->Translate(0, 0.5, 0);
 	cube->transform->SetScale(glm::vec3(0.25,0.25,0.25));
 	cube2->transform->Translate(0, -0.5, 0);
 	cube2->transform->SetScale(glm::vec3(0.25,0.25,0.25));
 	cube2->transform->SetParent(cube->transform);
-	cube2->transform->SetScale(glm::vec3(0.1f, 0.1f, 0.1f));
 	
 }
 void Torso::InputCreater() {
@@ -95,12 +94,12 @@ void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 	part->transform->Rotate(angle * direction.x, angle * direction.y, angle * direction.z);
 }
 void Torso::Draw(Renderer* renderer) {
-	for (int i = 1; i < 11;i++)
-		gameObjects[i].Render(renderer);
-	gameObjects[2].Render(renderer);
-	gameObjects[3].Render(renderer);
+	/*for (int i = 1; i < 11;i++)
+		gameObjects[i].Render(renderer);*/
+	//gameObjects[2].Render(renderer);
+	//gameObjects[3].Render(renderer);
 	//cube->transform->Translate(0.01f, 0, 0);
-	/*cube->transform->Rotate(5.0f, 0, 0);
+	cube->transform->Rotate(0.0f, 0, 1.0f);
 	cube->Render(renderer);
-	cube2->Render(renderer);*/
+	cube2->Render(renderer);
 }

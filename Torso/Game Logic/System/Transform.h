@@ -22,6 +22,7 @@ public:
 	void SetScale(glm::vec3 scale);
 	void Translate(float x, float y, float z); 
 	void Rotate(float x, float y, float z);
+	glm::vec3 RotatePivot(float x, float y, float z, glm::vec3 pivot);
 	glm::vec3 GetGlobalPosition();
 	glm::vec3 GetGlobalRotation();
 	glm::vec3 GetGlobalScale();
