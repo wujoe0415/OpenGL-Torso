@@ -97,8 +97,8 @@ void Torso::RotateJoint(GameObject* part, float angle, glm::vec3 direction) {
 void Torso::Draw(Renderer* renderer) {
 	for (int i = 1; i < 11;i++)
 		gameObjects[i].Render(renderer);
-	/*gameObjects[2].Render(renderer);
-	gameObjects[3].Render(renderer);*/
+	gameObjects[2].Render(renderer);
+	gameObjects[3].Render(renderer);
 	//cube->transform->Translate(0.01f, 0, 0);
 	/*cube->transform->Rotate(5.0f, 0, 0);
 	cube->Render(renderer);

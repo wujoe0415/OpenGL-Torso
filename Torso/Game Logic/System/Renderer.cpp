@@ -94,7 +94,7 @@ void Renderer::Render(glm::mat4 pmodel, glm::vec3 color) {
 	shader.SetMatrix4("view", view);
 
 	glm::mat4 model = pmodel;
-	//std::cout << glm::to_string(model) << std::endl;
+	std::cout << glm::to_string(model) << std::endl;
 	shader.SetMatrix4("model", model);
 
 	glBindVertexArray(VAO);
@@ -114,6 +114,15 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 
 	glm::mat4 model = glm::mat4(1.0f);
 
+	
+
+	//model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
+	  // first translate (transformations are: scale happens first, then rotation, and then final translation happens; reversed order)
+	//model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // move origin of rotation to center of quad
+	//model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // move origin back
+	
+	model = glm::translate(model, position);
+
 	glm::vec3 xNorm(1.0, 0.0f, 0.0);
 	glm::vec3 yNorm(0.0, 1.0f, 0.0);
 	glm::vec3 zNorm(0.0, 0.0f, 1.0);
@@ -123,12 +132,10 @@ void Renderer::Render(glm::vec3 position, glm::vec3 rotation, glm::vec3 size, gl
 	zNorm = glm::rotate(zNorm, glm::radians(-rotation.x), xNorm);
 	model = glm::rotate(model, glm::radians(rotation.z), zNorm); // Rotate on Z axis
 
-	//model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(0.5f, 1.0f, 0.0f));
-	model = glm::translate(model, position);  // first translate (transformations are: scale happens first, then rotation, and then final translation happens; reversed order)
-	//model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f)); // move origin of rotation to center of quad
-	//model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f)); // move origin back
 	model = glm::scale(model, size); // last scale
+
 	//std::cout << glm::to_string(model) << std::endl;
+	
 	shader.SetMatrix4("model", model);
 
 	glBindVertexArray(VAO);

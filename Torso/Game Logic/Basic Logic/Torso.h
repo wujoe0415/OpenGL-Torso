@@ -16,6 +16,19 @@ public:
 								 {"Upper right arm", 4},{"Lower right arm", 5},{"Upper left leg", 6},
 								 {"Lower left leg", 7},{"Upper right leg", 8},{"Lower right leg", 9}, 
 								 {"Body", 10} };
+	glm::vec3 jointpositions[11] = {
+		glm::vec3(0,0,0),
+		glm::vec3(0,0.8,0),
+		glm::vec3(-0.5,0.6,0),
+		glm::vec3(-0.85,0.6,0),
+		glm::vec3(0.5,0.6,0),
+		glm::vec3(0.85,0.6,0),
+		glm::vec3(-0.17,-0.2,0),
+		glm::vec3(-0.17,-0.58,0),
+		glm::vec3(0.17,-0.2,0),
+		glm::vec3(0.17,-0.58,0),
+		glm::vec3(0,0.3,0),
+	};
 	glm::vec3 partpositions[11] = {
 		glm::vec3(0,0,0),
 		glm::vec3(0,0.8,0),

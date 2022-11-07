@@ -8,11 +8,21 @@ Transform::Transform(glm::vec3 postion, glm::vec3 rotation, glm::vec3 scale) {
 	localScale = scale;
 	Parent = NULL;
 }
-glm::mat4 Transform::GetModelMatrix() {
+void Transform::ComputeModelMatrix() {
 	if (Parent == NULL)
-		return GetLocalModelMatrix();
+		modelMatrix = GetLocalModelMatrix();
 	else
-		return  Parent->GetLocalModelMatrix() * GetLocalModelMatrix();
+		modelMatrix = Parent->GetLocalModelMatrix() * GetLocalModelMatrix();
+}
+glm::mat4 Transform::GetModelMatrix() {
+	//ComputeModelMatrix();
+	return modelMatrix;
+}
+void Transform::UpdateSelfAndChildren() {
+	ComputeModelMatrix();
+
+	for (Transform* child : Children)
+		child->UpdateSelfAndChildren();
 }
 glm::mat4 Transform::GetLocalModelMatrix()
 {
@@ -36,8 +46,8 @@ glm::mat4 Transform::GetLocalModelMatrix()
 	//std::cout << "Translation : " << glm::to_string(glm::translate(glm::mat4(1.0f), localPosition)) << std::endl << std::endl;
 	//std::cout << "Scale : " << glm::to_string(glm::scale(glm::mat4(1.0f), localScale)) << std::endl << std::endl;
 	//std::cout << "Rotation X : " << localRotation.x << std::endl;
-	std::cout << glm::to_string(glm::translate(glm::mat4(1.0f), localPosition) *
-		roationMatrix *	glm::scale(glm::mat4(1.0f), localScale))<<std::endl;
+	/*std::cout << std::endl << glm::to_string(glm::translate(glm::mat4(1.0f), localPosition) *
+		roationMatrix *	glm::scale(glm::mat4(1.0f), localScale))<<std::endl;*/
 	return glm::translate(glm::mat4(1.0f), localPosition) *
 		roationMatrix *	glm::scale(glm::mat4(1.0f), localScale);
 }
@@ -84,12 +94,14 @@ void Transform::SetPosition(glm::vec3 position) {
 		this->localPosition = position;
 	else
 		this->localPosition = position - Parent->GetGlobalPosition();
+	UpdateSelfAndChildren();
 }
 void Transform::SetRotation(glm::vec3 rotation) {
 	if (Parent == NULL)
 		this->localRotation = rotation;
 	else
 		this->localRotation = rotation - Parent->GetGlobalRotation();
+	UpdateSelfAndChildren();
 }
 void Transform::SetScale(glm::vec3 scale) {
 	if (Parent == NULL)
@@ -101,12 +113,15 @@ void Transform::SetScale(glm::vec3 scale) {
 		localScale.y = parentScale.y == 0 ? 0 : (float)scale.y / parentScale.y;
 		localScale.z = parentScale.z == 0 ? 0 : (float)scale.z / parentScale.z;
 	}
+	UpdateSelfAndChildren();
 }
 void Transform::Translate(float x, float y, float z) {
 	this->localPosition += glm::vec3(x, y, z);
+	UpdateSelfAndChildren();
 }
 void Transform::Rotate(float x, float y, float z) {
 	localRotation += glm::vec3(x, y, z);
+	UpdateSelfAndChildren();
 }
 glm::vec3 Transform::GetGlobalPosition() {
 	if (Parent == NULL)
