@@ -29,9 +29,9 @@ Torso::Torso() {
 	for (int i = 1; i < 11; i++) {
 		std::cout << i << " " << glm::to_string(gameObjects[i].transform->GetGlobalScale()) << std::endl;
 	}*/
-	cube->transform->Translate(0, 0.5, 0);
+	cube->transform->Translate(0, 0.3, 0);
 	cube->transform->SetScale(glm::vec3(0.25,0.25,0.25));
-	cube2->transform->Translate(0, -0.5, 0);
+	cube2->transform->Translate(0, -0.3, 0);
 	cube2->transform->SetScale(glm::vec3(0.25,0.25,0.25));
 	cube2->transform->SetParent(cube->transform);
 	
@@ -99,7 +99,8 @@ void Torso::Draw(Renderer* renderer) {
 	//gameObjects[2].Render(renderer);
 	//gameObjects[3].Render(renderer);
 	//cube->transform->Translate(0.01f, 0, 0);
-	cube->transform->Rotate(0.0f, 0, 1.0f);
+	cube->transform->Rotate(2.0f, 0.0, 1.0);
+	std::cout << glm::to_string(cube2->transform->GetGlobalPosition())<<std::endl;
 	cube->Render(renderer);
 	cube2->Render(renderer);
 }

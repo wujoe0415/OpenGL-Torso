@@ -60,7 +60,7 @@ glm::mat4 Transform::GetModelMatrix() {
 	return position * roationMatrix *	scale;
 }
 void Transform::UpdateSelfAndChildren() {
-	modelMatrix = GetModelMatrix();
+	//modelMatrix = GetModelMatrix();
 
 	for (Transform* child : Children)
 		child->UpdateSelfAndChildren();
@@ -165,17 +165,18 @@ void Transform::Translate(float x, float y, float z) {
 	this->localPosition += glm::vec3(x, y, z);
 	UpdateSelfAndChildren();
 }
-glm::vec3 Transform::RotatePivot(float pitch, float yaw, float roll, glm::vec3 pivot) {
+glm::vec3 Transform::RotatePivot(float roll, float pitch, float yaw, glm::vec3 pivot) {
 	pitch = glm::radians(pitch);
 	yaw = glm::radians(yaw);
 	roll = glm::radians(roll);
 	float radius = glm::distance(localPosition, glm::vec3(0.0f));
-	glm::vec3 direction = glm::vec3(1.0f);
+	glm::vec3 direction = glm::vec3(0.0f);
 	direction.x = -cos(yaw)*sin(pitch)*sin(roll) - sin(yaw)*cos(roll);
 	direction.y = -sin(yaw)*sin(pitch)*sin(roll) + cos(yaw)*cos(roll);
 	direction.z = cos(pitch)*sin(roll);
 	glm::vec3 lastposition = pivot + radius * direction;
-	std::cout << glm::to_string(lastposition)<<std::endl;
+	std::cout << "direction : " << glm::to_string(direction) << std::endl;
+	//std::cout << glm::to_string(lastposition)<<std::endl;
 	return lastposition;
 }
 void Transform::Rotate(float x, float y, float z) {
@@ -187,7 +188,7 @@ glm::vec3 Transform::GetGlobalPosition() {
 		return localPosition;
 	else {
 		//std::cout << "Absolute position " << glm::to_string(Parent->GetGlobalPosition() + localPosition) << std::endl;
-		return RotatePivot(Parent->GetGlobalRotation().x,Parent->GetGlobalRotation().y,Parent->GetGlobalRotation().z, Parent->GetGlobalPosition()) + localPosition;
+		return RotatePivot(Parent->localRotation.x,Parent->localRotation.y,Parent->localRotation.z, Parent->GetGlobalPosition());
 	}
 }
 glm::vec3 Transform::GetGlobalRotation() {
